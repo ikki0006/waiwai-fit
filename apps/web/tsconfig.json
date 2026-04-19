@@ -1,0 +1,24 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"target": "ES2022",
+		"lib": ["DOM", "DOM.Iterable", "ES2022"],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"jsx": "react-jsx",
+		"allowImportingTsExtensions": true,
+		"rootDirs": [".", "./.react-router/types"],
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./app/*", "../api/src/*"]
+		},
+		"noEmit": true
+	},
+	"include": [
+		"app/**/*.ts",
+		"app/**/*.tsx",
+		".react-router/types/**/*.ts",
+		"env.d.ts"
+	],
+	"exclude": ["node_modules", "build"]
+}
