@@ -5,55 +5,66 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Game Boy DMG palette
- *  - lightest: #9bbc0f
- *  - light:    #8bac0f
- *  - dark:     #306230
- *  - darkest:  #0f380f
+ * Retro Buddy palette (extended Game Boy olive)
+ *  - shadow:   #1F2816  (outline / strongest text)
+ *  - olive-darkest: #2F3A1F
+ *  - olive-dark:    #4D5F2A
+ *  - olive:         #788A3A  (signature Gameboy green)
+ *  - olive-light:   #A8B65A
+ *  - olive-pale:    #C8D07A  (screen background)
+ *  - cream:         #E6E3A6  (highlight)
  */
 :root {
-	--background: 74 85% 40%;
-	--foreground: 120 58% 14%;
-	--card: 74 85% 40%;
-	--card-foreground: 120 58% 14%;
-	--popover: 74 85% 40%;
-	--popover-foreground: 120 58% 14%;
-	--primary: 120 35% 28%;
-	--primary-foreground: 74 85% 40%;
-	--secondary: 74 84% 37%;
-	--secondary-foreground: 120 58% 14%;
-	--muted: 74 84% 37%;
-	--muted-foreground: 120 35% 28%;
-	--accent: 120 35% 28%;
-	--accent-foreground: 74 85% 40%;
+	--olive-shadow: 91 30% 12%;
+	--olive-darkest: 86 30% 18%;
+	--olive-dark: 81 39% 27%;
+	--olive: 75 41% 39%;
+	--olive-light: 70 39% 53%;
+	--olive-pale: 64 49% 65%;
+	--cream: 57 56% 78%;
+
+	--background: var(--olive-pale);
+	--foreground: var(--olive-shadow);
+	--card: var(--cream);
+	--card-foreground: var(--olive-shadow);
+	--popover: var(--cream);
+	--popover-foreground: var(--olive-shadow);
+	--primary: var(--olive-dark);
+	--primary-foreground: var(--cream);
+	--secondary: var(--olive-light);
+	--secondary-foreground: var(--olive-shadow);
+	--muted: var(--olive-light);
+	--muted-foreground: var(--olive-darkest);
+	--accent: var(--olive);
+	--accent-foreground: var(--cream);
 	--destructive: 0 60% 35%;
-	--destructive-foreground: 74 85% 40%;
-	--border: 120 58% 14%;
-	--input: 120 58% 14%;
-	--ring: 120 58% 14%;
+	--destructive-foreground: var(--cream);
+	--border: var(--olive-shadow);
+	--input: var(--olive-shadow);
+	--ring: var(--olive-shadow);
 	--radius: 0px;
 }
 
 .dark {
-	--background: 120 58% 14%;
-	--foreground: 74 85% 40%;
-	--card: 120 58% 14%;
-	--card-foreground: 74 85% 40%;
-	--popover: 120 58% 14%;
-	--popover-foreground: 74 85% 40%;
-	--primary: 74 85% 40%;
-	--primary-foreground: 120 58% 14%;
-	--secondary: 120 35% 28%;
-	--secondary-foreground: 74 85% 40%;
-	--muted: 120 35% 28%;
-	--muted-foreground: 74 84% 37%;
-	--accent: 74 85% 40%;
-	--accent-foreground: 120 58% 14%;
+	--background: var(--olive-shadow);
+	--foreground: var(--cream);
+	--card: var(--olive-darkest);
+	--card-foreground: var(--cream);
+	--popover: var(--olive-darkest);
+	--popover-foreground: var(--cream);
+	--primary: var(--olive);
+	--primary-foreground: var(--cream);
+	--secondary: var(--olive-dark);
+	--secondary-foreground: var(--cream);
+	--muted: var(--olive-dark);
+	--muted-foreground: var(--olive-light);
+	--accent: var(--olive);
+	--accent-foreground: var(--cream);
 	--destructive: 0 60% 35%;
-	--destructive-foreground: 74 85% 40%;
-	--border: 74 85% 40%;
-	--input: 74 85% 40%;
-	--ring: 74 85% 40%;
+	--destructive-foreground: var(--cream);
+	--border: var(--cream);
+	--input: var(--cream);
+	--ring: var(--cream);
 }
 
 @theme inline {
@@ -76,6 +87,15 @@
 	--color-border: hsl(var(--border));
 	--color-input: hsl(var(--input));
 	--color-ring: hsl(var(--ring));
+
+	--color-olive-shadow: hsl(var(--olive-shadow));
+	--color-olive-darkest: hsl(var(--olive-darkest));
+	--color-olive-dark: hsl(var(--olive-dark));
+	--color-olive: hsl(var(--olive));
+	--color-olive-light: hsl(var(--olive-light));
+	--color-olive-pale: hsl(var(--olive-pale));
+	--color-cream: hsl(var(--cream));
+
 	--radius-lg: var(--radius);
 	--radius-md: var(--radius);
 	--radius-sm: var(--radius);
@@ -99,8 +119,8 @@ body {
 	background-image:
 		repeating-linear-gradient(
 			0deg,
-			rgba(15, 56, 15, 0.06) 0,
-			rgba(15, 56, 15, 0.06) 1px,
+			hsl(var(--olive-shadow) / 0.06) 0,
+			hsl(var(--olive-shadow) / 0.06) 1px,
 			transparent 1px,
 			transparent 3px
 		);
@@ -112,4 +132,21 @@ body {
 *:focus-visible {
 	outline: 3px solid hsl(var(--foreground));
 	outline-offset: 2px;
+}
+
+/* Idle bob animation for the mascot */
+@keyframes mascot-bob {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-3px); }
+}
+.mascot-bob {
+	animation: mascot-bob 1.6s steps(2, end) infinite;
+}
+
+@keyframes mascot-blink {
+	0%, 92%, 100% { opacity: 1; }
+	95% { opacity: 0; }
+}
+.mascot-blink {
+	animation: mascot-blink 4s infinite;
 }

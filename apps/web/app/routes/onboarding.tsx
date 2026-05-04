@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { api } from "~/infrastructure/http/orpcClient";
 import { useAuthStore } from "~/state/authStore";
+import { Mascot } from "~/ui/components/mascot";
+import { SpeechBubble } from "~/ui/components/speech-bubble";
 import { Button } from "~/ui/components/shadcn/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/ui/components/shadcn/card";
 import { Input } from "~/ui/components/shadcn/input";
@@ -27,8 +29,29 @@ export default function OnboardingPage() {
 		onSuccess: () => navigate("/", { replace: true }),
 	});
 
+	const ready = !!startWeight && !!goalWeight;
+	const mascotState = mutation.error
+		? "error"
+		: mutation.isPending
+			? "searching"
+			: ready
+				? "suggesting"
+				: "waiting";
+
 	return (
-		<main className="flex min-h-screen items-center justify-center p-6">
+		<main className="flex min-h-screen flex-col items-center justify-center p-6">
+			<div className="mb-4 flex items-end gap-3">
+				<Mascot state={mascotState} bob size={88} />
+				<SpeechBubble tail="left" className="mb-2">
+					{mutation.error
+						? "保存できなかったよ"
+						: mutation.isPending
+							? "登録中…"
+							: ready
+								? "いいね！その目標で行こう"
+								: "目標を教えて！"}
+				</SpeechBubble>
+			</div>
 			<Card className="w-full max-w-md">
 				<CardHeader>
 					<CardTitle>はじめましょう</CardTitle>

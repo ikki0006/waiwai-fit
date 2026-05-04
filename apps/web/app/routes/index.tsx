@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { api } from "~/infrastructure/http/orpcClient";
 import { useAuthStore } from "~/state/authStore";
+import { Mascot, type MascotState } from "~/ui/components/mascot";
+import { SpeechBubble } from "~/ui/components/speech-bubble";
+import { StatusBadge, type StatusVariant } from "~/ui/components/status-badge";
 import { Button } from "~/ui/components/shadcn/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/ui/components/shadcn/card";
 import { Input } from "~/ui/components/shadcn/input";
@@ -58,10 +61,33 @@ export default function DashboardPage() {
 
 	if (!initialized || !profile) {
 		return (
-			<main className="flex min-h-screen items-center justify-center">
+			<main className="flex min-h-screen flex-col items-center justify-center gap-3">
+				<Mascot state="searching" bob size={80} />
 				<p className="text-muted-foreground">読み込み中…</p>
 			</main>
 		);
+	}
+
+	const hasRecord = !!latest;
+	let mascotState: MascotState;
+	let statusVariant: StatusVariant;
+	let bubble: string;
+	if (!hasRecord) {
+		mascotState = "waiting";
+		statusVariant = "waiting";
+		bubble = "最初の記録を入れてみよう！";
+	} else if ((goalPct ?? 0) >= 100) {
+		mascotState = "complete";
+		statusVariant = "match";
+		bubble = "目標達成！おめでとう";
+	} else if ((progressPct ?? 0) < 0) {
+		mascotState = "suggesting";
+		statusVariant = "checking";
+		bubble = "順調！この調子だ";
+	} else {
+		mascotState = "default";
+		statusVariant = "info";
+		bubble = "今日もコツコツ行こう";
 	}
 
 	return (
@@ -72,6 +98,14 @@ export default function DashboardPage() {
 					みんなのボード →
 				</Link>
 			</header>
+
+			<div className="flex items-end gap-3">
+				<Mascot state={mascotState} bob size={88} />
+				<div className="flex-1 space-y-2">
+					<StatusBadge variant={statusVariant} />
+					<SpeechBubble tail="left">{bubble}</SpeechBubble>
+				</div>
+			</div>
 
 			<Card>
 				<CardHeader>

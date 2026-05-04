@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getSupabase } from "~/infrastructure/supabase/client";
 import { useAuthStore } from "~/state/authStore";
+import { Mascot } from "~/ui/components/mascot";
+import { SpeechBubble } from "~/ui/components/speech-bubble";
 import { Button } from "~/ui/components/shadcn/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/ui/components/shadcn/card";
 import { Input } from "~/ui/components/shadcn/input";
@@ -32,8 +34,16 @@ export default function LoginPage() {
 		navigate("/", { replace: true });
 	}
 
+	const mascotState = error ? "error" : loading ? "searching" : "waiting";
+
 	return (
-		<main className="flex min-h-screen items-center justify-center p-6">
+		<main className="flex min-h-screen flex-col items-center justify-center p-6">
+			<div className="mb-4 flex items-end gap-3">
+				<Mascot state={mascotState} bob size={88} />
+				<SpeechBubble tail="left" className="mb-2">
+					{error ? "もう一度試してね" : loading ? "確認中…" : "ログインしてね！"}
+				</SpeechBubble>
+			</div>
 			<Card className="w-full max-w-sm">
 				<CardHeader>
 					<CardTitle className="text-2xl">▶ WAIWAI-FIT</CardTitle>

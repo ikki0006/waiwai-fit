@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import { api } from "~/infrastructure/http/orpcClient";
+import { Mascot } from "~/ui/components/mascot";
+import { StatusBadge } from "~/ui/components/status-badge";
 import { Avatar, AvatarFallback, AvatarImage } from "~/ui/components/shadcn/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "~/ui/components/shadcn/card";
 import { Progress } from "~/ui/components/shadcn/progress";
@@ -11,18 +13,24 @@ export default function BoardPage() {
 		queryFn: () => api.board.today({}),
 	});
 
+	const headerState = isLoading ? "searching" : (data?.length ?? 0) > 0 ? "suggesting" : "waiting";
+
 	return (
 		<main className="mx-auto max-w-xl p-6 space-y-4">
 			<header className="flex items-center justify-between">
-				<h1 className="text-xl font-bold">みんなの進捗</h1>
+				<div className="flex items-center gap-2">
+					<Mascot state={headerState} size={40} />
+					<h1 className="text-xl font-bold">みんなの進捗</h1>
+				</div>
 				<Link to="/" className="text-sm text-muted-foreground underline">
 					← 自分の画面
 				</Link>
 			</header>
 
 			<Card>
-				<CardHeader>
+				<CardHeader className="flex flex-row items-center justify-between">
 					<CardTitle>ランキング</CardTitle>
+					<StatusBadge variant={isLoading ? "checking" : "info"} />
 				</CardHeader>
 				<CardContent className="space-y-4">
 					{isLoading && <p className="text-muted-foreground text-sm">読み込み中…</p>}
