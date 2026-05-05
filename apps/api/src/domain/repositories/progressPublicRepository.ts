@@ -9,4 +9,5 @@ export interface ProgressPublicRepository {
 	listByDate(loggedAt: string): Promise<ProgressPublic[]>;
 	listLatestPerUser(): Promise<ProgressPublic[]>;
 	findByUser(userId: string, loggedAt: string): Promise<ProgressPublic | null>;
+	listSince(fromDate: string): Promise<ProgressPublic[]>;
 }

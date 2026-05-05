@@ -9,6 +9,8 @@
 		"typecheck": "react-router typegen && tsc"
 	},
 	"dependencies": {
+		"@fontsource/dotgothic16": "^5.2.8",
+		"@fontsource/press-start-2p": "^5.2.7",
 		"@orpc/client": "^1.13.13",
 		"@orpc/react-query": "^1.13.13",
 		"@radix-ui/react-avatar": "^1.1.1",
@@ -26,6 +28,7 @@
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"react-router": "^7.12.0",
+		"recharts": "^3.8.1",
 		"tailwind-merge": "^2.5.4",
 		"tailwindcss-animate": "^1.0.7",
 		"zustand": "^5.0.4"

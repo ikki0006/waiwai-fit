@@ -21,13 +21,6 @@
 		"enabled": true
 	},
 	"files": {
-		"ignore": [
-			"node_modules",
-			"dist",
-			"build",
-			".react-router",
-			".wrangler",
-			"*.generated.*"
-		]
+		"ignore": ["node_modules", "dist", "build", ".react-router", ".wrangler", "*.generated.*"]
 	}
 }

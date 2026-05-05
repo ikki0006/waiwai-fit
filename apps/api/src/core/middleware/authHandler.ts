@@ -1,5 +1,5 @@
-import type { Context, MiddlewareHandler } from "hono";
 import { createClient } from "@supabase/supabase-js";
+import type { Context, MiddlewareHandler } from "hono";
 import type { AuthUser, Env } from "~/types/env";
 
 /**

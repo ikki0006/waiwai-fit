@@ -1,52 +1,72 @@
 @import "tailwindcss";
+@import "@fontsource/dotgothic16/400.css";
+@import "@fontsource/press-start-2p/400.css";
 
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * Retro Buddy palette (extended Game Boy olive)
+ *  - shadow:   #1F2816  (outline / strongest text)
+ *  - olive-darkest: #2F3A1F
+ *  - olive-dark:    #4D5F2A
+ *  - olive:         #788A3A  (signature Gameboy green)
+ *  - olive-light:   #A8B65A
+ *  - olive-pale:    #C8D07A  (screen background)
+ *  - cream:         #E6E3A6  (highlight)
+ */
 :root {
-	--background: 0 0% 100%;
-	--foreground: 240 10% 3.9%;
-	--card: 0 0% 100%;
-	--card-foreground: 240 10% 3.9%;
-	--popover: 0 0% 100%;
-	--popover-foreground: 240 10% 3.9%;
-	--primary: 240 5.9% 10%;
-	--primary-foreground: 0 0% 98%;
-	--secondary: 240 4.8% 95.9%;
-	--secondary-foreground: 240 5.9% 10%;
-	--muted: 240 4.8% 95.9%;
-	--muted-foreground: 240 3.8% 46.1%;
-	--accent: 240 4.8% 95.9%;
-	--accent-foreground: 240 5.9% 10%;
-	--destructive: 0 84.2% 60.2%;
-	--destructive-foreground: 0 0% 98%;
-	--border: 240 5.9% 90%;
-	--input: 240 5.9% 90%;
-	--ring: 240 5.9% 10%;
-	--radius: 0.5rem;
+	--olive-shadow: 91 30% 12%;
+	--olive-darkest: 86 30% 18%;
+	--olive-dark: 81 39% 27%;
+	--olive: 75 41% 39%;
+	--olive-light: 70 39% 53%;
+	--olive-pale: 64 49% 65%;
+	--cream: 57 56% 78%;
+
+	--background: var(--olive-pale);
+	--foreground: var(--olive-shadow);
+	--card: var(--cream);
+	--card-foreground: var(--olive-shadow);
+	--popover: var(--cream);
+	--popover-foreground: var(--olive-shadow);
+	--primary: var(--olive-dark);
+	--primary-foreground: var(--cream);
+	--secondary: var(--olive-light);
+	--secondary-foreground: var(--olive-shadow);
+	--muted: var(--olive-light);
+	--muted-foreground: var(--olive-darkest);
+	--accent: var(--olive);
+	--accent-foreground: var(--cream);
+	--destructive: 0 60% 35%;
+	--destructive-foreground: var(--cream);
+	--border: var(--olive-shadow);
+	--input: var(--olive-shadow);
+	--ring: var(--olive-shadow);
+	--radius: 0px;
 }
 
 .dark {
-	--background: 240 10% 3.9%;
-	--foreground: 0 0% 98%;
-	--card: 240 10% 3.9%;
-	--card-foreground: 0 0% 98%;
-	--popover: 240 10% 3.9%;
-	--popover-foreground: 0 0% 98%;
-	--primary: 0 0% 98%;
-	--primary-foreground: 240 5.9% 10%;
-	--secondary: 240 3.7% 15.9%;
-	--secondary-foreground: 0 0% 98%;
-	--muted: 240 3.7% 15.9%;
-	--muted-foreground: 240 5% 64.9%;
-	--accent: 240 3.7% 15.9%;
-	--accent-foreground: 0 0% 98%;
-	--destructive: 0 62.8% 30.6%;
-	--destructive-foreground: 0 0% 98%;
-	--border: 240 3.7% 15.9%;
-	--input: 240 3.7% 15.9%;
-	--ring: 240 4.9% 83.9%;
+	--background: var(--olive-shadow);
+	--foreground: var(--cream);
+	--card: var(--olive-darkest);
+	--card-foreground: var(--cream);
+	--popover: var(--olive-darkest);
+	--popover-foreground: var(--cream);
+	--primary: var(--olive);
+	--primary-foreground: var(--cream);
+	--secondary: var(--olive-dark);
+	--secondary-foreground: var(--cream);
+	--muted: var(--olive-dark);
+	--muted-foreground: var(--olive-light);
+	--accent: var(--olive);
+	--accent-foreground: var(--cream);
+	--destructive: 0 60% 35%;
+	--destructive-foreground: var(--cream);
+	--border: var(--cream);
+	--input: var(--cream);
+	--ring: var(--cream);
 }
 
 @theme inline {
@@ -69,12 +89,72 @@
 	--color-border: hsl(var(--border));
 	--color-input: hsl(var(--input));
 	--color-ring: hsl(var(--ring));
+
+	--color-olive-shadow: hsl(var(--olive-shadow));
+	--color-olive-darkest: hsl(var(--olive-darkest));
+	--color-olive-dark: hsl(var(--olive-dark));
+	--color-olive: hsl(var(--olive));
+	--color-olive-light: hsl(var(--olive-light));
+	--color-olive-pale: hsl(var(--olive-pale));
+	--color-cream: hsl(var(--cream));
+
 	--radius-lg: var(--radius);
-	--radius-md: calc(var(--radius) - 2px);
-	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: var(--radius);
+	--radius-sm: var(--radius);
+	--font-sans: "DotGothic16", "Press Start 2P", ui-monospace, monospace;
+	--font-mono: "Press Start 2P", "DotGothic16", ui-monospace, monospace;
+}
+
+html,
+body {
+	font-family: "DotGothic16", "Press Start 2P", ui-monospace, monospace;
+	image-rendering: pixelated;
+	letter-spacing: 0.02em;
 }
 
 body {
 	@apply bg-background text-foreground;
-	font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+	background-image: repeating-linear-gradient(
+		0deg,
+		hsl(var(--olive-shadow) / 0.06) 0,
+		hsl(var(--olive-shadow) / 0.06) 1px,
+		transparent 1px,
+		transparent 3px
+	);
+	background-attachment: fixed;
+	min-height: 100vh;
+}
+
+/* Chunky pixel-style focus ring */
+*:focus-visible {
+	outline: 3px solid hsl(var(--foreground));
+	outline-offset: 2px;
+}
+
+/* Idle bob animation for the mascot */
+@keyframes mascot-bob {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-3px);
+	}
+}
+.mascot-bob {
+	animation: mascot-bob 1.6s steps(2, end) infinite;
+}
+
+@keyframes mascot-blink {
+	0%,
+	92%,
+	100% {
+		opacity: 1;
+	}
+	95% {
+		opacity: 0;
+	}
+}
+.mascot-blink {
+	animation: mascot-blink 4s infinite;
 }
