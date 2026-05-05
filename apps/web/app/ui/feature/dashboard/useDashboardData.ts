@@ -15,8 +15,8 @@ export function useDashboardData() {
 	});
 
 	const historyQuery = useQuery({
-		queryKey: ["weight.history"],
-		queryFn: () => api.weight.myHistory({ limit: 30 }),
+		queryKey: ["weight.history", 90],
+		queryFn: () => api.weight.myHistory({ limit: 90 }),
 		enabled: !!profileQuery.data,
 	});
 

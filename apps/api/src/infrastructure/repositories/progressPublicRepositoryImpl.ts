@@ -61,6 +61,16 @@ export class ProgressPublicRepositoryImpl implements ProgressPublicRepository {
 		return rows.sort((a, b) => a.progressFromStartPct - b.progressFromStartPct);
 	}
 
+	async listSince(fromDate: string): Promise<ProgressPublic[]> {
+		const { data, error } = await this.sb
+			.from("progress_public")
+			.select("*")
+			.gte("logged_at", fromDate)
+			.order("logged_at", { ascending: true });
+		if (error) throw new Error(`listSince: ${error.message}`);
+		return (data as ProgressPublicRow[]).map(toProgress);
+	}
+
 	async findByUser(userId: string, loggedAt: string): Promise<ProgressPublic | null> {
 		const { data, error } = await this.sb
 			.from("progress_public")

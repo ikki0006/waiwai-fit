@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router";
 import { api } from "~/infrastructure/http/orpcClient";
 import { fieldErrorOf, toMutationError } from "~/lib/mutationError";
 import type { MascotState } from "~/ui/components/mascot";
 import { MascotMessage } from "~/ui/components/mascot-message";
+import { type PeriodDays, PeriodFilter } from "~/ui/components/period-filter";
+import { ProgressChart, type ProgressPoint } from "~/ui/components/progress-chart";
 import { Button } from "~/ui/components/shadcn/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/ui/components/shadcn/card";
 import { Input } from "~/ui/components/shadcn/input";
@@ -33,6 +35,7 @@ export function DashboardPage({ profile, history }: DashboardPageProps) {
 	const qc = useQueryClient();
 	const [weight, setWeight] = useState("");
 	const [loggedAt, setLoggedAt] = useState(todayInJst);
+	const [period, setPeriod] = useState<PeriodDays>(30);
 
 	const recordMutation = useMutation({
 		mutationFn: (input: { weightKg: number; loggedAt: string }) => api.weight.log(input),
@@ -42,6 +45,21 @@ export function DashboardPage({ profile, history }: DashboardPageProps) {
 			qc.invalidateQueries({ queryKey: ["weight.history"] });
 		},
 	});
+
+	const chartData = useMemo<ProgressPoint[]>(() => {
+		const denom = profile.startWeight - profile.goalWeight;
+		if (denom === 0) return [];
+		const cutoff = new Date();
+		cutoff.setUTCDate(cutoff.getUTCDate() - (period - 1));
+		const cutoffStr = cutoff.toISOString().slice(0, 10);
+		return history
+			.filter((log) => log.loggedAt >= cutoffStr)
+			.map((log) => ({
+				date: log.loggedAt,
+				goalAchievementPct: ((profile.startWeight - log.weightKg) / denom) * 100,
+			}))
+			.sort((a, b) => a.date.localeCompare(b.date));
+	}, [history, profile.startWeight, profile.goalWeight, period]);
 
 	const recordError = recordMutation.error ? toMutationError(recordMutation.error) : null;
 	const weightFieldError = fieldErrorOf(recordError, "weightKg");
@@ -109,6 +127,16 @@ export function DashboardPage({ profile, history }: DashboardPageProps) {
 						</div>
 						<Progress value={Math.max(0, Math.min(100, goalPct ?? 0))} />
 					</div>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader className="flex flex-row items-center justify-between space-y-0">
+					<CardTitle>推移</CardTitle>
+					<PeriodFilter value={period} onChange={setPeriod} />
+				</CardHeader>
+				<CardContent>
+					<ProgressChart data={chartData} />
 				</CardContent>
 			</Card>
 
