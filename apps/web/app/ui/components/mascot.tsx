@@ -13,13 +13,7 @@ import { cn } from "~/lib/utils";
  *  - Holds a cream briefcase in front (arms visible on the sides)
  *  - Two short legs / feet at the bottom
  */
-export type MascotState =
-	| "default"
-	| "searching"
-	| "suggesting"
-	| "complete"
-	| "waiting"
-	| "error";
+export type MascotState = "default" | "searching" | "suggesting" | "complete" | "waiting" | "error";
 
 interface MascotProps {
 	state?: MascotState;
@@ -77,7 +71,6 @@ const COLORS: Record<string, string> = {
 type Override = Record<string, string>;
 
 const EYE_COLS = [4, 5, 11, 12] as const;
-const EYE_ROWS = [6, 7, 8] as const;
 
 function buildOverrides(state: MascotState): Override {
 	const o: Override = {};
@@ -128,36 +121,20 @@ function buildOverrides(state: MascotState): Override {
 			break;
 	}
 
-	// Suppress unused EYE_ROWS warning while keeping it documented
-	void EYE_ROWS;
-
 	return o;
 }
 
-export function Mascot({
-	state = "default",
-	size = 96,
-	className,
-	bob = false,
-}: MascotProps) {
+export function Mascot({ state = "default", size = 96, className, bob = false }: MascotProps) {
 	const overrides = buildOverrides(state);
 	const rects: React.ReactNode[] = [];
 
 	for (let y = 0; y < GRID_H; y++) {
-		const row = BASE_ROWS[y]!;
+		const row = BASE_ROWS[y];
+		if (!row) continue;
 		for (let x = 0; x < GRID_W; x++) {
-			const ch = overrides[`${y},${x}`] ?? row[x]!;
-			if (ch === ".") continue;
-			rects.push(
-				<rect
-					key={`${x}-${y}`}
-					x={x}
-					y={y}
-					width={1}
-					height={1}
-					fill={COLORS[ch]}
-				/>,
-			);
+			const ch = overrides[`${y},${x}`] ?? row[x];
+			if (!ch || ch === ".") continue;
+			rects.push(<rect key={`${x}-${y}`} x={x} y={y} width={1} height={1} fill={COLORS[ch]} />);
 		}
 	}
 

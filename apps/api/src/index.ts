@@ -45,7 +45,8 @@ app.get("/openapi.json", async (c) => {
 		info: {
 			title: "waiwai-fit API",
 			version: "1.0.0",
-			description: "社内ダイエットアプリのAPI。認証はSupabase Auth(Google OAuth)のJWTをBearerで渡す。",
+			description:
+				"社内ダイエットアプリのAPI。認証はSupabase Auth(Google OAuth)のJWTをBearerで渡す。",
 		},
 		servers: [{ url: new URL(c.req.url).origin }],
 	});

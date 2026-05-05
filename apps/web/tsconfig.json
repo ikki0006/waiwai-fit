@@ -14,11 +14,6 @@
 		},
 		"noEmit": true
 	},
-	"include": [
-		"app/**/*.ts",
-		"app/**/*.tsx",
-		".react-router/types/**/*.ts",
-		"env.d.ts"
-	],
+	"include": ["app/**/*.ts", "app/**/*.tsx", ".react-router/types/**/*.ts", "env.d.ts"],
 	"exclude": ["node_modules", "build"]
 }

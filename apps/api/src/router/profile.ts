@@ -1,8 +1,12 @@
 import { os } from "@orpc/server";
 import { z } from "zod";
 import { toORPCError } from "~/core/exceptions/toORPCError";
+import {
+	OnboardingInputSchema,
+	ProfileSchema,
+	UpdateGoalsInputSchema,
+} from "~/domain/schemas/profile";
 import type { ORPCContext } from "~/router/context";
-import { OnboardingInputSchema, ProfileSchema, UpdateGoalsInputSchema } from "~/domain/schemas/profile";
 import { CompleteOnboardingUseCase } from "~/usecase/onboarding/completeOnboardingUseCase";
 import { GetMyProfileUseCase } from "~/usecase/profile/getMyProfileUseCase";
 import { UpdateGoalsUseCase } from "~/usecase/profile/updateGoalsUseCase";

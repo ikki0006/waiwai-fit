@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "@fontsource/dotgothic16/400.css";
+@import "@fontsource/press-start-2p/400.css";
 
 @plugin "tailwindcss-animate";
 
@@ -103,10 +105,6 @@
 	--font-mono: "Press Start 2P", "DotGothic16", ui-monospace, monospace;
 }
 
-* {
-	border-radius: 0 !important;
-}
-
 html,
 body {
 	font-family: "DotGothic16", "Press Start 2P", ui-monospace, monospace;
@@ -116,14 +114,13 @@ body {
 
 body {
 	@apply bg-background text-foreground;
-	background-image:
-		repeating-linear-gradient(
-			0deg,
-			hsl(var(--olive-shadow) / 0.06) 0,
-			hsl(var(--olive-shadow) / 0.06) 1px,
-			transparent 1px,
-			transparent 3px
-		);
+	background-image: repeating-linear-gradient(
+		0deg,
+		hsl(var(--olive-shadow) / 0.06) 0,
+		hsl(var(--olive-shadow) / 0.06) 1px,
+		transparent 1px,
+		transparent 3px
+	);
 	background-attachment: fixed;
 	min-height: 100vh;
 }
@@ -136,16 +133,27 @@ body {
 
 /* Idle bob animation for the mascot */
 @keyframes mascot-bob {
-	0%, 100% { transform: translateY(0); }
-	50% { transform: translateY(-3px); }
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-3px);
+	}
 }
 .mascot-bob {
 	animation: mascot-bob 1.6s steps(2, end) infinite;
 }
 
 @keyframes mascot-blink {
-	0%, 92%, 100% { opacity: 1; }
-	95% { opacity: 0; }
+	0%,
+	92%,
+	100% {
+		opacity: 1;
+	}
+	95% {
+		opacity: 0;
+	}
 }
 .mascot-blink {
 	animation: mascot-blink 4s infinite;
